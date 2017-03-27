@@ -1,18 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-16.04"
 
   config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.hostname = "devopsbox"
   config.vm.provision "shell", path: "scripts/bootstrap.sh"
 
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.install = false
+    ansible.playbook = "ansible/playbook.yml"
+    ansible.limit = "devopsbox"
+    ansible.inventory_path = "ansible/hosts"
+    ansible.verbose = true
+    ansible.raw_arguments = "-vvvv -v"
+  end
 end

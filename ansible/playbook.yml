@@ -1,0 +1,5 @@
+---
+- hosts: devopsbox
+  become: true
+  roles:
+    - docker

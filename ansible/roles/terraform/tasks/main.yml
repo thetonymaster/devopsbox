@@ -1,0 +1,9 @@
+---
+- name: install unzip
+  apt: name=unzip state=present cache_valid_time=60
+
+- name: get terraform
+  unarchive:
+    src: https://releases.hashicorp.com/terraform/0.9.1/terraform_0.9.1_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: true

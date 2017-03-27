@@ -17,3 +17,9 @@
 
 - name: add user to docker group
   user: name=vagrant groups=docker append=yes
+
+- name: get docker-compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.11.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 0777
